@@ -1,0 +1,11 @@
+.game{
+    height: 100px;
+    background-Color: red;
+    border: 1px solid white;
+    font-size: 65px;
+    color: white;
+    display: flex;
+    justify-Content: center;
+    align-items: center;
+    cursor: pointer;
+}

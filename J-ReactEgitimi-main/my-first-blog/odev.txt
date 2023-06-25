@@ -1,0 +1,18 @@
+src klasörüne 2 tane klasör oluşturun
+admin - ui
+
+admin klasöründe sadece AdminHome.js
+ui içerisinde 
+Layout, Home, About, Contact,
+
+
+iki klasörün dışında da Login ve Register page olsun
+
+
+ben www.ornek.com => layouıt içerisinde home sayfası açılsın
+
+giriş butonu olsun ona tıklarsan logine yönlendirsin
+Login butonuna basınca admin sayfasına gitsin --isteğe bağlı
+register butonuna basınca register sayfası açılsın
+
+www.ornek.com/admin => kullanıcı girişi yapılmadıysa home sayfasına atsın -- isteğe bağlı

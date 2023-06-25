@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SPA</title>
+    <style>
+        a{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a onclick="getHomePage()">Home</a></li>
+            <li><a onclick="getAboutPage()">About</a></li>
+            <li><a onclick="getContactPage()">Contact</a></li>            
+            <li><a onclick="getYetenekPage()">Yetenekler</a></li>            
+        </ul>
+    </nav>
+
+    <div id="root"></div>
+
+    <script>
+        const root = document.getElementById("root");
+    </script>
+    <script src="Home.js"></script>
+    <script src="About.js"></script>
+    <script src="Contact.js"></script> 
+</body>
+</html>

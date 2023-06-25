@@ -1,0 +1,51 @@
+Proje Oluşturma
+npx create-react-app proje-adi
+
+React için Router NPM Paketi
+npm install react-router-dom
+
+Projeyi Node.js Ayağa kaldırma
+npm start / npm start dev
+
+Projeyi Canlıya Almak için Derler
+npm build
+
+
+indexOf
+lastIndexOf
+setInternal
+setTimeOut
+Fetch
+axios
+Ajax
+getElementById("");
+getQuerySelector();
+getQuerySelectorAll();
+for
+for in
+for of
+foreach
+
+$.ajax({
+    method: "Post",
+    url: "api adresi",
+    body: "body",
+    success: function(data) {
+        console.log(data)
+    }
+})
+
+
+----------------------------
+Node.js Api Yapma
+---------------------------
+Kurulacak paketler:
+npm install express => bu paket api istekleri yazabilmemizi sağlıyor
+npm install cors => başka sitelerin bize api isteği yapabilmesini sağlıyor
+npm install jsonwebtoken => token üretmemizi ve kontrol etmemizi sağlıyor
+npm install -global nodemon => bir kere kurulsa yeter. Api sayfamızı canlı çalıştırmaya olanak sağlıyor.
+
+
+/// next js ile uygulama oluşturmak istersek
+kurulum komutu
+npx create-next-app@latest 
