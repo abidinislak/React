@@ -1,9 +1,11 @@
 
 import './App.css'
 import HelloWorld from './HelloWorld'
+import DepartmentComponent from './component/DepartmentComponent'
 import EmployeeComponent from './component/EmployeeComponent'
 import FooterComponent from './component/FooterComponent'
 import HeaderComponent from './component/HeaderComponent'
+import ListDepartmentComponent from './component/ListDepartmentComponent'
 import { ListEmployeeComponent } from './component/ListEmployeeComponent'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 function App() {
@@ -25,7 +27,9 @@ function App() {
           <Route path='/updateemployee/:id' element={<EmployeeComponent />}  >          </Route>
 
 
-
+          <Route path='/departments' element={<ListDepartmentComponent />} ></Route>
+          <Route path='/addDepartment' element={<DepartmentComponent />} ></Route>
+          <Route path='/updateButton/:id' element={<DepartmentComponent />} ></Route>
 
         </Routes>
 

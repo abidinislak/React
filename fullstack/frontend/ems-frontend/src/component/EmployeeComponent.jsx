@@ -2,11 +2,19 @@
 import React, { useEffect, useState } from 'react'
 import { createEmployee, getEmployee, updateEmployee } from '../service/EmployeService';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getAllDepartments } from '../service/DepatmentService';
 const EmployeeComponent = () => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [departmentid, serDepartmentid] = useState('');
+
+    const [deparments, setDepartmenst] = useState([]);
+
+
+
+
 
     const { id } = useParams();
 
@@ -15,9 +23,23 @@ const EmployeeComponent = () => {
 
         firstName: '',
         lastName: '',
-        email: ''
+        email: '',
+        departmnet: ''
     });
     const navigator = useNavigate();
+
+
+
+    useEffect(() => {
+
+        getAllDepartments().then((res) => {
+
+            setDepartmenst(res.data);
+
+        }).catch(err => console.log(err));
+
+
+    }, [])
 
     useEffect(() => {
 
@@ -28,9 +50,13 @@ const EmployeeComponent = () => {
 
             getEmployee(id).then((response) => {
 
+
+                debugger;
                 setFirstName(response.data.firstName);
                 setLastName(response.data.lastName);
                 setEmail(response.data.email);
+                serDepartmentid(response.data.department_id
+                );
             }).catch((error) => {
 
 
@@ -47,7 +73,7 @@ const EmployeeComponent = () => {
         if (validateForm()) {
 
 
-            const employee = { firstName, lastName, email }
+            const employee = { firstName, lastName, email, department_id }
             console.log(employee)
 
             if (id) {
@@ -91,7 +117,6 @@ const EmployeeComponent = () => {
     function pagetitle() {
 
 
-        debugger;
         if (id) {
 
             return <h2 className='text-center' >Update Employee</h2>
@@ -131,6 +156,17 @@ const EmployeeComponent = () => {
         }
         else {
             errorsCopy.email = 'ema il is reuwired';
+            valid = false;
+
+        }
+        if (departmentid.trim()) {
+
+
+            errorsCopy.departmnet = '';
+
+        }
+        else {
+            errorsCopy.departmnetl = 'departmnet is reuwired';
             valid = false;
 
         }
@@ -180,6 +216,30 @@ const EmployeeComponent = () => {
 
                                 <label htmlFor="email" className='form-label' >Email</label>
                                 <input type="text" id='email' name='email' value={email} className={`form-control ${errors.email ? 'is-invalid' : ''} `} onChange={(e) => setEmail(e.target.value)} />
+                                {errors.email && <div className='invalid-feedback' > {errors.email}</div>}
+
+
+                            </div>
+                            <div className='form-group mb-2'>
+
+                                <label htmlFor="email" className='form-label' >Select Department</label>
+
+                                <select value={departmentid} onChange={(e) => serDepartmentid(e.target.value)} className={`form-control ${errors.departmnet ? 'is-invalid' : ''} `} >
+
+                                    <option value="selectg departmne"> Select departmnet</option>
+
+                                    {
+
+                                        deparments.map(d =>
+
+                                            <option key={d.id} value={d.id} >  {d.departmentName}</option>
+                                        )
+
+                                    }
+
+
+                                </select>
+
                                 {errors.email && <div className='invalid-feedback' > {errors.email}</div>}
 
 
