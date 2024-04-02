@@ -22,9 +22,13 @@ const LoginComponent = () => {
         await loginAPIcall(username, password).then((response) => {
             console.log(response);
 
-            const token = 'Basic ' + window.btoa(username + ":" + password);
+            // const token = 'Basic ' + window.btoa(username + ":" + password);
+            const token = 'Bearer ' + response.data.accessToken;
 
-            savedLogedinuser(username);
+            const role = response.data.role;
+
+
+            savedLogedinuser(username, role);
             storeToken(token);
             navigator("/todos");
             window.location.reload(false);

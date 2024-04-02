@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { deleteTodo, getAllTodos, completeTodo, incompleteTodo } from '../services/TodoServices';
 import { useNavigate } from 'react-router-dom';
+import { isAdminUser } from '../services/AuthService';
 const ListTodoComponet = () => {
     const navigate = useNavigate();
 
+
+    const isAdmin = isAdminUser();
 
     const [todos, setTodos] = useState([]);
 
@@ -119,7 +122,15 @@ const ListTodoComponet = () => {
 
             <h2 className='text-center'>List TODOS</h2>
 
-            <button className='btn btn-primary mb-2' onClick={addTodo} > New Todo </button>
+
+
+
+            {
+
+
+                isAdmin && <button className='btn btn-primary mb-2' onClick={addTodo} > New Todo </button>
+            }
+
             <div>
 
                 <table className='table table-bordered table-striped' >
@@ -152,8 +163,19 @@ const ListTodoComponet = () => {
                                     <td>{t.description}</td>
                                     <td>{t.process ? 'YES' : 'NO'}</td>
                                     <td>
-                                        <button className='btn btn-info' onClick={() => updateTodo(t.id)} >update</button>
-                                        <button className='btn btn-danger' style={{ marginLeft: "10px" }} onClick={() => removeTodo(t.id)} >Delete</button>
+
+
+                                        {isAdmin &&
+                                            <button className='btn btn-info' onClick={() => updateTodo(t.id)} >update</button>
+
+
+                                        }
+                                        {
+                                            isAdmin &&
+
+                                            <button className='btn btn-danger' style={{ marginLeft: "10px" }} onClick={() => removeTodo(t.id)} >Delete</button>
+
+                                        }
 
 
                                         <button className={t.process ? 'btn btn-success' : 'btn btn-primary'}

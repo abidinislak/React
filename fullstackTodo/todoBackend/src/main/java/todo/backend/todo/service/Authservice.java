@@ -8,13 +8,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import todo.backend.todo.dto.JwtAuthResponse;
 import todo.backend.todo.dto.LoginDto;
 import todo.backend.todo.dto.RegisterDto;
 import todo.backend.todo.entity.Roles;
 import todo.backend.todo.entity.User;
+import todo.backend.todo.exception.ResourceNotFound;
 import todo.backend.todo.exception.TodoApiException;
 import todo.backend.todo.repository.RoleRepo;
 import todo.backend.todo.repository.UserRepo;
+import todo.backend.todo.security.JwtTokenProvider;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +34,9 @@ public class Authservice {
     private PasswordEncoder encoder;
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     public String register(RegisterDto registerDto) {
 
@@ -69,11 +75,22 @@ public class Authservice {
     }
 
 
-    public String login(LoginDto loginDto) {
+    public JwtAuthResponse login(LoginDto loginDto) {
 
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "user logged in succefully";
+
+        String token = jwtTokenProvider.generateToken(authentication);
+
+
+        User logged = userRepo.findByUsernameOrEmail(loginDto.getUsernameOrEmail(), loginDto.getUsernameOrEmail()).orElseThrow(() -> new ResourceNotFound("user not foun"));
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setRole(logged.getRoles().stream().findFirst().get().getName());
+        jwtAuthResponse.setAccessToken(token);
+
+
+        return jwtAuthResponse;
     }
 }

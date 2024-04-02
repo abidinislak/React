@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import todo.backend.todo.dto.JwtAuthResponse;
 import todo.backend.todo.dto.LoginDto;
 import todo.backend.todo.dto.RegisterDto;
 import todo.backend.todo.service.Authservice;
@@ -31,9 +32,12 @@ public class AuthController {
 
     @PostMapping("/login")
 
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto) {
 
-        return new ResponseEntity<>(authservice.login(loginDto), HttpStatus.OK
+        JwtAuthResponse jwtAuthResponse = authservice.login(loginDto);
+
+
+        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK
         );
     }
 

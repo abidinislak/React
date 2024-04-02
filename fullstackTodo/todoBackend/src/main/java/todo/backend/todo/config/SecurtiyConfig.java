@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import todo.backend.todo.security.JwtAuthenticationEntyPoint;
+import todo.backend.todo.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -20,6 +23,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurtiyConfig {
 
     private UserDetailsService userDetailsService;
+    private JwtAuthenticationEntyPoint jwtAuthenticationEntyPoint;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -54,6 +59,15 @@ public class SecurtiyConfig {
                     autohorize.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll();
                     autohorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     autohorize.anyRequest().authenticated();
+
+                    try {
+                        httpSecurity.exceptionHandling(excepton -> excepton.authenticationEntryPoint(jwtAuthenticationEntyPoint));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                    httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
                 }
         ).httpBasic(Customizer.withDefaults());
 
