@@ -1,6 +1,9 @@
-package todo.backend.todo.config;
+package org.abidin.customFullstak.config;
+
 
 import lombok.AllArgsConstructor;
+import org.abidin.customFullstak.security.JWTAuthenticationfilter;
+import org.abidin.customFullstak.security.JwtAuthenticationEntyPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,36 +17,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import todo.backend.todo.security.JwtAuthenticationEntyPoint;
-import todo.backend.todo.security.JwtAuthenticationFilter;
+
 
 @Configuration
 @EnableMethodSecurity
 @AllArgsConstructor
-public class SecurtiyConfig {
+public class Securityconfig {
 
     private UserDetailsService userDetailsService;
     private JwtAuthenticationEntyPoint jwtAuthenticationEntyPoint;
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private JWTAuthenticationfilter jwtAuthenticationFilter;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-
-
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-
-    
-    }
+//    @Bean
+//    public AuthenticationManager getAuthenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//
+//
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
 
         httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable()).authorizeHttpRequests(
@@ -56,9 +50,9 @@ public class SecurtiyConfig {
 //                    autohorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");
 //                    autohorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN", "USER");
 //                    autohorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
-                    autohorize.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll();
-                    autohorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-                    autohorize.anyRequest().authenticated();
+//                    autohorize.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll();
+//                    autohorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+                    autohorize.anyRequest().permitAll();
 
                     try {
                         httpSecurity.exceptionHandling(excepton -> excepton.authenticationEntryPoint(jwtAuthenticationEntyPoint));
@@ -73,14 +67,4 @@ public class SecurtiyConfig {
 
         return httpSecurity.build();
     }
-
-
-//    @Bean
-//    UserDetailsService userDetailsService() {
-//        UserDetails abidin = User.builder().username("abidin").password(passwordEncoder().encode("ankara")).roles("USER").build();
-//        UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("admin")).roles("ADMIN").build();
-//        return new InMemoryUserDetailsManager(abidin, admin);
-//
-//
-//    }
 }
