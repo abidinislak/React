@@ -14,7 +14,7 @@ function App() {
 
   function AuthenticatedRoutes({ children }) {
 
-    const isauth = isUserLoggedIn();
+     const isauth = isUserLoggedIn();
 
 
     if (isauth) { return children }
@@ -36,8 +36,10 @@ function App() {
             <AuthenticatedRoutes>
               <ListTodoComponet></ListTodoComponet>
             </AuthenticatedRoutes>
+          } >
 
-          } ></Route>
+            
+          </Route>
           <Route path='/add-todo' element={
 
 
